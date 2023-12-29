@@ -1,0 +1,11 @@
+unit U_Calculos;
+
+interface
+
+TCalculos = class
+  function CalculaAreaTriangulo(Base, Altura : Single): Single; // Single = float, numérico 32 bits
+end;
+
+implementation
+
+end.

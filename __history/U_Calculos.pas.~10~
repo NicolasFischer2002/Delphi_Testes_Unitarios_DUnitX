@@ -1,0 +1,25 @@
+unit U_Calculos;
+
+interface
+
+type
+
+ { TCalculos }
+
+TCalculos = class
+public
+  function CalculaAreaTriangulo(Base, Altura : Single): Single;
+end;
+
+implementation
+
+{ TCalculos }
+
+{ TCalculos }
+
+function TCalculos.CalculaAreaTriangulo(Base, Altura: Single): Single;
+begin
+
+end;
+
+end.

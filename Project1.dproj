@@ -98,10 +98,11 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="Unit1.pas">
-            <Form>F_Calculadora</Form>
+        <DCCReference Include="U_InterfaceGraficaCalc.pas">
+            <Form>F_InterfaceGraficaCalc</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="U_Calculos.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
