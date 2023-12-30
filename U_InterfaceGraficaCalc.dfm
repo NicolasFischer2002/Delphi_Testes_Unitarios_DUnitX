@@ -3,8 +3,8 @@ object F_InterfaceGraficaCalc: TF_InterfaceGraficaCalc
   Top = 0
   BorderStyle = bsSingle
   Caption = 'F_InterfaceGraficaCalc'
-  ClientHeight = 261
-  ClientWidth = 434
+  ClientHeight = 260
+  ClientWidth = 430
   Color = clMenuHighlight
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -94,7 +94,7 @@ object F_InterfaceGraficaCalc: TF_InterfaceGraficaCalc
   object pnl_top: TPanel
     Left = 0
     Top = 0
-    Width = 434
+    Width = 430
     Height = 5
     Align = alTop
     Color = clRed
@@ -118,8 +118,8 @@ object F_InterfaceGraficaCalc: TF_InterfaceGraficaCalc
   end
   object btn_calcularArea: TButton
     Left = 0
-    Top = 213
-    Width = 434
+    Top = 212
+    Width = 430
     Height = 48
     Align = alBottom
     Caption = 'Calcular '#225'rea do tri'#226'ngulo'

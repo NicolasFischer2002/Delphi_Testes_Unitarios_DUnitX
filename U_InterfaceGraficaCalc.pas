@@ -33,12 +33,6 @@ implementation
 {$R *.dfm}
 
 
-// Dois exemplos de Testes que poderão ser feitos com DUnitx, são:
-// Áreas negativas, Altura e/ou Base zeradas
-// https://docwiki.embarcadero.com/RADStudio/Sydney/en/Developing_Tests_with_DUnitX
-// https://docwiki.embarcadero.com/RADStudio/Sydney/en/DUnitX_Overview
-
-
 procedure TF_InterfaceGraficaCalc.MudaCorEdits(Edits: array of TEdit; NovaCorFundo, NovaCorTexto: TColor);
 var
    i : Integer;
