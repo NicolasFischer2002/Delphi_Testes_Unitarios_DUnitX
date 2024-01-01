@@ -3,7 +3,7 @@ unit U_Testes;
 interface
 
 uses
-  DUnitX.TestFramework, System.SysUtils, U_Calculos;
+  DUnitX.TestFramework, System.SysUtils, System.Math, U_Calculos;
 
 type
   [TestFixture]
@@ -67,21 +67,31 @@ begin
      // Nesta fase, você prepara o ambiente de teste.
      // Isso inclui a configuração de objetos,
      // a definição de variáveis e tudo o que é necessário para o teste
-     Base := 10;
-     Altura := 10;
-     Resultado := 50;
+     Base      := 1;
+     Altura    := 1;
+     Resultado := 0.5;
 
 
      // Act (Agir): Aqui, você executa a operação ou a função que deseja testar.
      // Este é o passo onde você realiza a ação que está sendo testada.
      Calculado := aTCalculos.CalculaAreaTriangulo(Base, Altura);
 
-
      // Assert (Afirmação): Na última fase, você verifica se o resultado da ação
      // realizada na fase "Act" é o esperado.
      // Você compara o resultado real com o resultado esperado e relata
      // qualquer discrepância como uma falha no teste.
-     Assert.AreEqual(Resultado, Calculado);
+     Assert.IsNotEmpty(Base, 'Base vazia'); // Verifica se está vazio
+     Assert.IsNotEmpty(Altura, 'Altura vazia');
+     // Se o valor da base não for atribuido a variável será inicializada com 0
+     Assert.IsTrue(Base > 0, 'Base não inicializada');
+     Assert.IsTrue(Altura > 0, 'Altura não inicializada');
+     Assert.IsNotNull(Base, 'Base nula');
+     Assert.IsNotNull(Altura, 'Altura nula');
+     // Not a Number, se for diferente de número retorna true
+     Assert.IsFalse(IsNan(Base), 'Base não é um Float');
+     Assert.IsFalse(IsNan(Altura), 'Altura não é um Float');
+     Assert.IsTrue(Calculado > 0, 'Área negativa'); // Toda área deve ser não negativa
+     Assert.AreEqual(Resultado, Calculado, 'Cálculo incorreto'); // O valor calculado deve estar correto
 end;
 
 // <===== DUnitX Functions =====>

@@ -3,7 +3,7 @@ unit U_Testes;
 interface
 
 uses
-  DUnitX.TestFramework, System.SysUtils, U_Calculos;
+  DUnitX.TestFramework, System.SysUtils, System.Math, U_Calculos;
 
 type
   [TestFixture]
@@ -21,6 +21,13 @@ type
 
 implementation
 
+// <===== Testes para realizar =====>
+// Dois exemplos de Testes que poderão ser feitos com DUnitx, são:
+// Áreas negativas, Altura e/ou Base zeradas
+
+// <===== Documentação =====>
+// https://docwiki.embarcadero.com/RADStudio/Sydney/en/Developing_Tests_with_DUnitX
+// https://docwiki.embarcadero.com/RADStudio/Sydney/en/DUnitX_Overview
 
 
 // <===== Setup e TearDown =====>
@@ -60,9 +67,9 @@ begin
      // Nesta fase, você prepara o ambiente de teste.
      // Isso inclui a configuração de objetos,
      // a definição de variáveis e tudo o que é necessário para o teste
-     Base := 10;
-     Altura := 10;
-     Resultado := 50;
+     Base      := 1;
+     Altura    := 1;
+     Resultado := 0.5;
 
 
      // Act (Agir): Aqui, você executa a operação ou a função que deseja testar.
@@ -74,7 +81,15 @@ begin
      // realizada na fase "Act" é o esperado.
      // Você compara o resultado real com o resultado esperado e relata
      // qualquer discrepância como uma falha no teste.
-     Assert.AreEqual(Resultado, Calculado);
+     Assert.IsNotEmpty(Base, 'Base vazia'); // Verifica se está vazio
+     Assert.IsNotEmpty(Altura, 'Altura vazia');
+     Assert.IsNotNull(Base, 'Base nula');
+     Assert.IsNotNull(Altura, 'Altura nula');
+     // Not a Number, se for diferente de número retorna true
+     Assert.IsFalse(IsNan(Base), 'Base não é um Float');
+     Assert.IsFalse(IsNan(Altura), 'Altura não é um Float');
+     Assert.IsTrue(Calculado > 0, 'Área negativa'); // Toda área deve ser não negativa
+     Assert.AreEqual(Resultado, Calculado, 'Cálculo incorreto'); // O valor calculado deve estar correto
 end;
 
 // <===== DUnitX Functions =====>
@@ -95,7 +110,7 @@ end;
 // WillRaise (Aumentará) => Verifica se o método gerará uma exceção
 // StartsWith (Começa com) => Verifica se uma string começa com uma substring especificada
 // InheritsFrom (Herda de) => Verifica se uma classe é descendente de uma classe especificada
-// IsMatch (É compatível) =>
+// IsMatch (É compatível) => Verifica se o item corresponde a um padrão especificado
 
 initialization
   TDUnitX.RegisterTestFixture(TMyTestObject);
