@@ -1,0 +1,135 @@
+unit U_Testes;
+
+interface
+
+uses
+  DUnitX.TestFramework, System.SysUtils, System.Math, Windows, U_Calculos;
+
+type
+  [TestFixture]
+  TMyTestObject = class
+  strict private
+    aTCalculos: TCalculos;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+    [Test]
+    procedure TestCalculaAreaTriangulo;
+  end;
+
+implementation
+
+
+// <===== Testes para realizar =====>
+// Dois exemplos de Testes que poderão ser feitos com DUnitx, são:
+// Áreas negativas, Altura e/ou Base zeradas
+
+// <===== Documentação =====>
+// https://docwiki.embarcadero.com/RADStudio/Sydney/en/Developing_Tests_with_DUnitX
+// https://docwiki.embarcadero.com/RADStudio/Sydney/en/DUnitX_Overview
+
+
+// <===== Setup e TearDown =====>
+// Juntos, esses métodos garantem que cada teste
+// comece com um estado consistente e termine sem deixar resíduos.
+// Eles fazem parte da abordagem padrão para configuração e limpeza
+// em testes unitários e ajudam a garantir a reprodutibilidade e a
+// confiabilidade dos testes.
+
+
+
+// O método Setup (configurar) é chamado antes da execução
+// de cada método de teste na classe de testes.
+// É utilizado para realizar a configuração inicial necessária para o teste,
+// como a criação de instâncias de objetos que serão utilizados nos testes.
+procedure TMyTestObject.Setup;
+begin
+     aTCalculos := TCalculos.Create;
+end;
+
+// O método TearDown (destruir) é chamado após a execução de cada método
+// de teste na classe de testes.
+// Ele é utilizado para realizar a limpeza
+// ou liberação de recursos utilizados nos testes.
+procedure TMyTestObject.TearDown;
+begin
+     FreeAndNil(aTCalculos);
+end;
+
+procedure TMyTestObject.TestCalculaAreaTriangulo;
+var
+  Base, Altura, Resultado, Calculado : Single;
+begin
+     // Três fases comuns em um teste unitário conhecidas como o padrão AAA:
+
+     // Arrange (Preparar):
+     // Nesta fase, você prepara o ambiente de teste.
+     // Isso inclui a configuração de objetos,
+     // a definição de variáveis e tudo o que é necessário para o teste
+     Base      := 0;
+     Altura    := 0;
+     Resultado := 0;
+
+     Try
+        // Act (Agir): Aqui, você executa a operação ou a função que deseja testar.
+        // Este é o passo onde você realiza a ação que está sendo testada.
+        Calculado := aTCalculos.CalculaAreaTriangulo(Base, Altura);
+
+        // Assert (Afirmação): Na última fase, você verifica se o resultado da ação
+        // realizada na fase "Act" é o esperado.
+        // Você compara o resultado real com o resultado esperado e relata
+        // qualquer discrepância como uma falha no teste.
+        Assert.IsNotEmpty(Base, 'Base vazia'); // Verifica se está vazio
+        Assert.IsNotEmpty(Altura, 'Altura vazia');
+        // Se o valor da base não for atribuido a variável será inicializada com 0
+        Assert.IsTrue(Base > 0, 'Base não inicializada');
+        Assert.IsTrue(Altura > 0, 'Altura não inicializada');
+        Assert.IsNotNull(Base, 'Base nula');
+        Assert.IsNotNull(Altura, 'Altura nula');
+        // Not a Number, se for diferente de número retorna true
+        Assert.IsFalse(IsNan(Base), 'Base não é um Float');
+        Assert.IsFalse(IsNan(Altura), 'Altura não é um Float');
+        Assert.IsTrue(Calculado > 0, 'Área negativa'); // Toda área deve ser não negativa
+        Assert.AreEqual(Resultado, Calculado, 'Cálculo incorreto'); // O valor calculado deve estar correto
+
+     Except
+      on E: Exception do
+        begin
+             Writeln('Erro: ' + E.Message +
+              ' em ' + E.ClassName +
+              ' (Endereço: ' + IntToHex(Integer(ExceptAddr), 8) + ')');
+             raise Exception.Create('Exceção lançada ao CalculaAreaTriangulo: ' + E.Message);
+
+             // Após exibir a exceção gerada, também poderia ser legal
+             // gravar em um arquivo de log caso haja necessidade
+        end;
+     end;
+end;
+
+// <===== Algumas das DUnitX's Functions =====>
+// Pass (Passar) => Verifica se uma rotina funciona
+// Fail (Falhar) => Verifica se uma rotina falha
+// AreEqual (São iguais) => Verifica se os itens são iguais
+// AreNotEqual (Não são iguais) => Verifica se os itens não são iguais
+// AreSame (São os mesmos) => Verifica se dois itens têm o mesmo valor
+// AreNotSame (Não são iguais) => Verifica se dois itens não têm o mesmo valor
+// Contains (Contém) => Verifica se o item está em uma lista
+// DoesNotContain (Não contém) => Verifica se o item não está em uma lista
+// IsTrue (É verdade) => Verifica se uma condição é verdadeira
+// IsFalse (É falso) => Verifica se uma condição é falsa
+// IsEmpty (Está vazia) => Verifica se o valor de um item está vazio
+// IsNotEmpty (Não está vazio) => Verifica se o valor de um item não está vazio
+// IsNull (É nulo) => Verifica se um item é nulo
+// IsNotNull (Não é nulo) => Verifica se um item não é nulo
+// WillRaise (Aumentará) => Verifica se o método gerará uma exceção
+// StartsWith (Começa com) => Verifica se uma string começa com uma substring especificada
+// InheritsFrom (Herda de) => Verifica se uma classe é descendente de uma classe especificada
+// IsMatch (É compatível) => Verifica se o item corresponde a um padrão especificado
+
+initialization
+  TDUnitX.RegisterTestFixture(TMyTestObject);
+
+end.
+
